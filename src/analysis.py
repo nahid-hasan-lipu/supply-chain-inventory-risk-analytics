@@ -141,17 +141,27 @@ def profitability_analysis(df: pd.DataFrame):
                             .sort_values(ascending=False).head(10))
     top_profit_products.to_csv(DATA / "top_profit_products.csv")
 
-    fig, ax = plt.subplots(figsize=(7, 8))
+    # Two subplots with independent x-axis scales: the most-profitable
+    # categories are ~1000x the least-profitable ones in absolute dollars,
+    # so a single shared scale visually flattens the "least profitable"
+    # side to nothing. Also: none of these are actual losses (see
+    # loss_making check below), so amber (not red) avoids implying losses
+    # that aren't there.
     worst5 = by_category.head(5)
-    best5 = by_category.tail(5)
-    combined = pd.concat([worst5, best5])
-    colors = ["#dc2626"] * len(worst5) + ["#059669"] * len(best5)
-    ax.barh(combined.index, combined["profit"], color=colors)
-    ax.set_xlabel("Total profit ($)")
-    ax.set_title("5 Least & 5 Most Profitable Categories")
-    ax.axvline(0, color="black", linewidth=0.8)
+    best5 = by_category.tail(5).sort_values("profit")
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
+    ax1.barh(worst5.index, worst5["profit"], color="#d97706")
+    ax1.set_xlabel("Total profit ($)")
+    ax1.set_title("5 Least Profitable Categories")
+
+    ax2.barh(best5.index, best5["profit"], color="#059669")
+    ax2.set_xlabel("Total profit ($)")
+    ax2.set_title("5 Most Profitable Categories")
+
+    fig.suptitle("Category Profitability — note the two panels use different x-axis scales", y=1.02)
     plt.tight_layout()
-    plt.savefig(FIGS / "profitability_by_category.png")
+    plt.savefig(FIGS / "profitability_by_category.png", bbox_inches="tight")
     plt.close()
 
     return by_category, loss_rate, top_loss_products, top_profit_products
