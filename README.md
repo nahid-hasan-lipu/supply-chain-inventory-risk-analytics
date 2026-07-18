@@ -54,7 +54,7 @@ Late-delivery rate barely moves across markets (Europe 55.2%, Pacific Asia 55.0%
 
 ![Monthly Late Rate Trend](figures/monthly_late_rate_trend.png)
 
-The late-delivery rate holds steady in the ~50-60% band across the full 3-year window with no clear improving or worsening trend — this is a persistent structural problem in how delivery commitments are set, not a temporary operational blip tied to a particular month or season.
+The late-delivery rate holds steady in a narrow 51.9%–56.8% band across the full 3-year window with no clear improving or worsening trend — this is a persistent structural problem in how delivery commitments are set, not a temporary operational blip tied to a particular month or season.
 
 ### 3. Delivery status breakdown
 
